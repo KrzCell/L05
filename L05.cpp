@@ -10,18 +10,19 @@ int main(void)
 {
 	constexpr int SIZE = 5;
 	int tab[SIZE][SIZE] = {};
+	int i;
 
 	// Element początkowy:
-	int w = 0, k = SIZE / 2;
+	int w = 0, k = SIZE/2;
 	tab[w][k] = 1;
 
 	//Następne elementy:
-	for (int n = 2; n < SIZE * SIZE; n += 1)
+	for (i = 0; i < SIZE * SIZE; i++)
 	{
 		//Przesuń współrzędne
-		w -= 1; k += 1;
+		w ++, k --;
 		//Sprawdź i skoryguj naruszenie granic tablicy:
-		if (w <= 0)
+		if (w < 0)
 			w += SIZE;
 		if (k >= SIZE)
 			k -= SIZE;
@@ -29,20 +30,23 @@ int main(void)
 		if (tab[w][k] != 0)
 		{
 			//Przesuń współrzędne i sprawdź granice:
-			w += 1;
+			w += 2;
+			k--;
+			if (k < 0)
+				k += SIZE;
 			if (w >= SIZE)
 				w -= SIZE;
 		}
 		//Zapisz element:
-		tab[w][k] = n;
+		tab[w][k] = i;
 	}
 
 	//Wyświetl tablicę:
-	for (int x = 0; x < SIZE; x += 1)
+	for (i = 0; i < SIZE; i += 1)
 	{
 		for (int y = 0; y < SIZE; y += 1)
 		{
-			cout << y << "\t";
+			cout << tab[i][y] << "\t";
 		}
 		cout << endl;
 	}
