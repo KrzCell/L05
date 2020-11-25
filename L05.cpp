@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 using namespace std;
-#define ZadanieB 
+#define ZadanieC 
 
 #ifdef ZadanieA
 
@@ -78,11 +78,11 @@ int main(void)
 int main()
 {
 	//Tekst do przeszukania:
-	char tekst[] = "}()";
+	char tekst[] = "}(){";
 	int liczniki[3] = {0,0,0};
 	//Wyszukiwanie nawiasów:
 	int dlugosc=sizeof(tekst)-1;
-	bool zamkniety = true;
+	int zamkniety[3] = {1,1,1};
 	for (int j = 0; j < dlugosc; j++)
 	{
 		switch (tekst[j])
@@ -108,33 +108,83 @@ int main()
 		default:
 			break;
 		}
-		if (liczniki[0] < 0 || liczniki[1] < 0 || liczniki[2] < 0)
-			zamkniety = false;
-		else
-			zamkniety = true;
+		if (liczniki[0] < 0)
+			zamkniety[0] = 0;
+		if (liczniki[1] < 0)
+			zamkniety[1] = 0;
+		if (liczniki[2] < 0)
+			zamkniety[2] = 0;
 		
     }
 
-	if (liczniki[0] == 0)
+	if (liczniki[0] == 0 || zamkniety[0] == 1)
 		cout << "OK ()\n";
 	else
 		cout << "BLAD ()\n";
 
-	if (liczniki[1] == 0)
+	if (liczniki[1] == 0 || zamkniety[1] == 1)
 		cout << "OK []\n";
 	else
 		cout << "BLAD []\n";
 
-	if (liczniki[2] == 0)
+	if (liczniki[2] == 0 || zamkniety[2] == 1)
 		cout << "OK {}\n";
 	else
 		cout << "BLAD {}\n";
+	
+
+
 }
 	
 
 #endif
 
 #ifdef ZadanieC
+int main()
+{
+	constexpr int ROZMIAR_DANYCH = 100, ROZMIAR_KLUCZA = 4;
+	constexpr int NAJWYZSZY_KOD_ZNAKU = 127;
+	char tekstWe[ROZMIAR_DANYCH];
+	char klucz[ROZMIAR_KLUCZA];
+	char szyfr[ROZMIAR_DANYCH];
+	char tekstWy[ROZMIAR_DANYCH];
 
+	//Pobranie danych:
+	cout << "Wiadomosc: ";
+	fgets(tekstWe, ROZMIAR_DANYCH, stdin);
+	cout << "Klucz szyfrujacy: ";
+	fgets(klucz, ROZMIAR_KLUCZA, stdin);
+	int i = 0, j = 0;
+
+	//Szyfrowanie:
+	while(tekstWe[i]!='\0')
+	{
+		if (j == 4)
+		{
+			szyfr[i] = (char)(((int)tekstWe[i] + (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+			j = 0;
+		}
+		else
+			szyfr[i] = (char)(((int)tekstWe[i] + (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+		i++;
+		j++;
+ 	}
+	cout << "Szyfrogram: " << szyfr << endl;
+
+	// Odszyfrowanie:
+	while (tekstWe[i] != '\0')
+	{
+		if (j == 4)
+		{
+			tekstWy[i] = (char)(((int)szyfr[i] - (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+			j = 0;
+		}
+		else
+			tekstWy[i] = (char)(((int)szyfr[i] - klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+		i++;
+		j++;
+	}
+	cout << "Wiadomosc: " << tekstWy << endl;
+}
 #endif
 
