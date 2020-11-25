@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <iomanip>
 using namespace std;
 #define ZadanieC 
 
@@ -142,7 +143,7 @@ int main()
 #ifdef ZadanieC
 int main()
 {
-	constexpr int ROZMIAR_DANYCH = 100, ROZMIAR_KLUCZA = 4;
+	constexpr int ROZMIAR_DANYCH = 100, ROZMIAR_KLUCZA = 5;
 	constexpr int NAJWYZSZY_KOD_ZNAKU = 127;
 	char tekstWe[ROZMIAR_DANYCH];
 	char klucz[ROZMIAR_KLUCZA];
@@ -157,7 +158,7 @@ int main()
 	int i = 0, j = 0;
 
 	//Szyfrowanie:
-	while(tekstWe[i]!='\0')
+	while (i < strlen(tekstWe) - 1)
 	{
 		if (j == 4)
 		{
@@ -169,22 +170,27 @@ int main()
 		i++;
 		j++;
  	}
-	cout << "Szyfrogram: " << szyfr << endl;
-
+	szyfr[i] = '\0';
+	cout << "Szyfrogram: "<< setw(strlen(szyfr)) << szyfr << endl;
+	
+	i = 0;
+	j = 0;
+	
 	// Odszyfrowanie:
-	while (tekstWe[i] != '\0')
+	while (i < strlen(tekstWe) - 1)
 	{
 		if (j == 4)
 		{
-			tekstWy[i] = (char)(((int)szyfr[i] - (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+			tekstWy[i] = (char)(((int)(szyfr[i]+NAJWYZSZY_KOD_ZNAKU) - (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
 			j = 0;
 		}
 		else
-			tekstWy[i] = (char)(((int)szyfr[i] - klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
+			tekstWy[i] = (char)(((int)(szyfr[i]+NAJWYZSZY_KOD_ZNAKU) - (int)klucz[j]) % NAJWYZSZY_KOD_ZNAKU);
 		i++;
 		j++;
 	}
-	cout << "Wiadomosc: " << tekstWy << endl;
+	tekstWy[i] = '\0';
+	cout << "Wiadomosc: " << setw(strlen(tekstWy))<< tekstWy << endl;
 }
 #endif
 

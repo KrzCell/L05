@@ -1,2 +1,4 @@
 ﻿  L05.cpp
+D:\studia\PPK\Repo\L05\L05\L05.cpp(161,11): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+D:\studia\PPK\Repo\L05\L05\L05.cpp(180,11): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
   L05.vcxproj -> D:\studia\PPK\Repo\L05\Debug\L05.exe
